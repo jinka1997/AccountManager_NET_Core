@@ -5,7 +5,7 @@ using System;
 
 namespace RestApi.Controllers
 {
-    public class AccountDetailsController : ApiControllerBase
+    public class DetailsController : ApiControllerBase
     {
         protected override Dictionary<string, object> PostDetail(MyDbContext context, JToken token)
         {
@@ -39,7 +39,6 @@ namespace RestApi.Controllers
             {
                 var fromDate = DateTime.Parse(fromDateString);
                 details = details.Where(v => (fromDate <= v.SettlementDay));
-
             }
 
             var toDateString = token["to_date"].Value<string>();
