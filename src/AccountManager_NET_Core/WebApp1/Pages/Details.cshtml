@@ -1,0 +1,62 @@
+﻿@page
+@using WebApp1.Pages
+@model DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<p>
+    <label for="text1">検索キーワード:</label>
+    <input type="text" name="text1" />
+</p>
+<p>
+    <input type="date" name="from" />
+    <input type="date" name="to" />
+</p>
+
+<table border="1">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            SettlementDay
+        </th>
+        <th>
+            ItemNumber
+        </th>
+        <th>
+            AccountTypeId
+        </th>
+        <th>
+            AccountTypeName
+        </th>
+        <th>
+            ExpenseOrRevenue
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Remarks
+        </th>
+    </tr>
+    @foreach (var item in Model.DetailItems)
+    {
+<tr>
+    <td>@item.Id</td>
+    <td>@item.SettlementDay</td>
+    <td>@item.ItemNumber</td>
+    <td>@item.AccountTypeId</td>
+    <td>@item.AccountTypeName</td>
+    <td>@item.ExpenseOrRevenue</td>
+    <td>@item.Amount</td>
+    <td>@item.Remarks</td>
+</tr>
+    }
+
+
+</table>
+
