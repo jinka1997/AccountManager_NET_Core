@@ -10,11 +10,9 @@ namespace RestApi.Controllers
     {
         protected override Dictionary<string, object> PostDetail(MyDbContext context, JToken token)
         {
-            var userId = token["user_id"].Value<int>();
             var dic = new Dictionary<string, object>();
 
-            var details = from d in context.AccountDetails
-                          where d.UserId == userId 
+            var details = from d in ExtractDetails(context, token)
                           group d by new { d.SettlementDay.Year, d.SettlementDay.Month, d.AccountTypeId } into g
                           select new
                           {

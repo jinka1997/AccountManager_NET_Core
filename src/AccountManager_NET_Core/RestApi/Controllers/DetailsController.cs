@@ -9,13 +9,11 @@ namespace RestApi.Controllers
     {
         protected override Dictionary<string, object> PostDetail(MyDbContext context, JToken token)
         {
-            var userId = token["user_id"].Value<int>();
             var dic = new Dictionary<string, object>();
 
-            var details = from d in context.AccountDetails
+            var details = from d in ExtractDetails(context,token)
                           join t in context.AccountTypes
                           on new { d.AccountTypeId, d.UserId } equals new { t.AccountTypeId, t.UserId }
-                          where d.UserId == userId
                           select new
                           {
                               d.Id,
@@ -32,20 +30,6 @@ namespace RestApi.Controllers
             if (!string.IsNullOrEmpty(keyword))
             {
                 details = details.Where(v => v.Remarks.Contains(keyword));
-            }
-
-            var fromDateString = token["from_date"].Value<string>();
-            if (!string.IsNullOrEmpty(fromDateString))
-            {
-                var fromDate = DateTime.Parse(fromDateString);
-                details = details.Where(v => (fromDate <= v.SettlementDay));
-            }
-
-            var toDateString = token["to_date"].Value<string>();
-            if (!string.IsNullOrEmpty(toDateString))
-            {
-                var toDate = DateTime.Parse(toDateString);
-                details = details.Where(v => (v.SettlementDay <= toDate));
             }
 
             var list = new List<Dictionary<string, object>>();

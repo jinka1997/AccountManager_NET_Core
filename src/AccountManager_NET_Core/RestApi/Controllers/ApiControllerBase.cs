@@ -4,6 +4,8 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using RestApi.Models;
+using System.Linq;
 
 namespace RestApi.Controllers
 {
@@ -24,6 +26,7 @@ namespace RestApi.Controllers
 
                     using (var context = new MyDbContext(oB.Options))
                     {
+
                         dic = PostDetail(context, token);
                     }
                 }
@@ -46,6 +49,28 @@ namespace RestApi.Controllers
             var cnc = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=AccountManage_Local;Integrated Security=True;");
             cnc.Open();
             return cnc;
+        }
+
+        protected IQueryable<AccountDetail> ExtractDetails(MyDbContext context, JToken token)
+        {
+            var userId = token["user_id"].Value<int>();
+
+            var details = context.AccountDetails.Where(v => v.UserId == userId);
+
+            var fromDateString = token["from_date"].Value<string>();
+            if (!string.IsNullOrEmpty(fromDateString))
+            {
+                var fromDate = DateTime.Parse(fromDateString);
+                details = details.Where(v => (fromDate <= v.SettlementDay));
+            }
+
+            var toDateString = token["to_date"].Value<string>();
+            if (!string.IsNullOrEmpty(toDateString))
+            {
+                var toDate = DateTime.Parse(toDateString);
+                details = details.Where(v => (v.SettlementDay <= toDate));
+            }
+            return details;
         }
     }
 }
