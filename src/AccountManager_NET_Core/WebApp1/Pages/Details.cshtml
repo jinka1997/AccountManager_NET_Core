@@ -7,14 +7,16 @@
 
 <h2>Details</h2>
 
-<p>
-    <label for="text1">検索キーワード:</label>
-    <input type="text" name="text1" />
-</p>
-<p>
-    <input type="date" name="from" />
-    <input type="date" name="to" />
-</p>
+
+<form method="post">
+    Keyword:
+    <input asp-for="SearchItem.Keyword" />
+    FromDate:
+    <input asp-for="SearchItem.FromDate" type="date" />
+    ToDate:
+    <input asp-for="SearchItem.ToDate" type="date" />
+    <input type="submit" />
+</form>
 
 <table border="1">
     <tr>

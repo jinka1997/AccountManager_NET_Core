@@ -17,7 +17,16 @@ namespace WebApp1.Pages
     {
         public IList<DetailItem> DetailItems { get; set; } = new List<DetailItem>();
 
+        [BindProperty]
+        public SearchItems SearchItem { set; get; }
+
         public void OnGet()
+        {
+        }
+
+
+
+        public void OnPost()
         {
             //WebApi呼び出し
             var url = "http://localhost:50367/api/Details";
@@ -28,9 +37,9 @@ namespace WebApp1.Pages
             var dic = new Dictionary<string, object>
             {
                 { "user_id", 1764565 },
-                { "keyword", "" },
-                { "from_date", "2018-11-02" },
-                { "to_date", "2018-11-05" }
+                { "keyword", SearchItem.Keyword },
+                { "from_date", SearchItem.FromDate.ToString("yyyy-MM-dd") },
+                { "to_date", SearchItem.ToDate.ToString("yyyy-MM-dd") }
             };
             var source = JToken.FromObject(dic);
 
@@ -69,7 +78,6 @@ namespace WebApp1.Pages
             }
         }
 
-
         public class DetailItem
         {
             public int Id { set; get; }
@@ -80,7 +88,13 @@ namespace WebApp1.Pages
             public string ExpenseOrRevenue { set; get; }
             public int Amount { set; get; }
             public string Remarks { set; get; }
+        }
 
+        public class SearchItems
+        {
+            public string Keyword { set; get; }
+            public DateTime FromDate { set; get; }
+            public DateTime ToDate { set; get; }
         }
 
     }
