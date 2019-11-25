@@ -32,8 +32,10 @@ namespace RestApi.Controllers
                 details = details.Where(v => v.Remarks.Contains(keyword));
             }
 
+            var orderedDetails = details.OrderBy(v => v.SettlementDay).ThenBy(v => v.ItemNumber);
+
             var list = new List<Dictionary<string, object>>();
-            foreach (var detail in details)
+            foreach (var detail in orderedDetails)
             {
                 var dic0 = new Dictionary<string, object>();
                 foreach (var prop in detail.GetType().GetProperties())

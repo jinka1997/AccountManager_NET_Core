@@ -30,35 +30,16 @@ namespace WebApp1.Pages
         {
             //WebApi呼び出し
             var url = "http://localhost:50367/api/Details";
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-            req.Method = "POST";
-            req.ContentType = "application/json";
-
             var dic = new Dictionary<string, object>
             {
                 { "user_id", 1764565 },
                 { "keyword", SearchItem.Keyword },
-                { "from_date", SearchItem.FromDate.ToString("yyyy-MM-dd") },
-                { "to_date", SearchItem.ToDate.ToString("yyyy-MM-dd") }
+                { "from_date", SearchItem.FromDate != DateTime.MinValue ? SearchItem.FromDate.ToString("yyyy-MM-dd") : "" },
+                { "to_date", SearchItem.ToDate != DateTime.MinValue ? SearchItem.ToDate.ToString("yyyy-MM-dd") : "" }
             };
             var source = JToken.FromObject(dic);
 
-            var inputJson = JsonConvert.SerializeObject(source);
-
-            byte[] byteArray = Encoding.UTF8.GetBytes(inputJson);
-            req.ContentLength = byteArray.Length;
-            using (Stream dataStream = req.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-            }
-            HttpWebResponse res = (HttpWebResponse)req.GetResponse();
-
-            var responseJson = "";
-            using (var sr = new StreamReader(res.GetResponseStream()))
-            {
-                responseJson = sr.ReadToEnd();
-            }
-            var result = JsonConvert.DeserializeObject<JToken>(responseJson);
+            var result = RestApi.Execute(url, "POST", source);
 
 
             foreach (var t in result["items"])
