@@ -13,5 +13,24 @@ namespace WebApp1.Pages
         {
 
         }
+
+        [BindProperty]
+        public SearchItems SearchItem { set; get; }
+
+        public void OnPost()
+        {
+            //TODO ラジオボタンが渡ってこない。。。
+            Console.WriteLine(SearchItem);
+        }
+
+        public class SearchItems
+        {
+            public DateTime FromDate { set; get; }
+            public DateTime ToDate { set; get; }
+            public object TypeYear { set; get; }
+            public object TypeMonth { set; get; }
+            public object TypeDay { set; get; }
+        }
+
     }
 }

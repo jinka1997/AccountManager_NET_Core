@@ -2,8 +2,15 @@
 @model WebApp1.Pages.SummaryModel
 @{
     ViewData["Title"] = "Summary";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h2>Summary</h2>
 
+<form method="post">
+
+    <input id="Radio1" type="radio" name="sum_type" value="Year" asp-for="SearchItem.TypeYear" />年
+    <input id="Radio2" type="radio" name="sum_type" value="Month" checked asp-for="SearchItem.TypeMonth"/>月
+    <input id="Radio3" type="radio" name="sum_type" value="Day" asp-for="SearchItem.TypeDay"/>日
+
+    <input type="submit" value="実行" />
+</form>

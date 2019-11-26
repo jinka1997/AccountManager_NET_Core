@@ -32,9 +32,11 @@ namespace RestApi.Controllers
                 details = details.Where(v => v.Remarks.Contains(keyword));
             }
 
+            //TODO ソートが効いてない
             var orderedDetails = details.OrderBy(v => v.SettlementDay).ThenBy(v => v.ItemNumber);
 
             var list = new List<Dictionary<string, object>>();
+
             foreach (var detail in orderedDetails)
             {
                 var dic0 = new Dictionary<string, object>();
