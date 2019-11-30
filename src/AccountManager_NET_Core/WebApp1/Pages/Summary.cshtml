@@ -6,11 +6,44 @@
 
 <h2>Summary</h2>
 
+
 <form method="post">
 
-    <input id="Radio1" type="radio" name="sum_type" value="Year" asp-for="SearchItem.TypeYear" />年
-    <input id="Radio2" type="radio" name="sum_type" value="Month" checked asp-for="SearchItem.TypeMonth"/>月
-    <input id="Radio3" type="radio" name="sum_type" value="Day" asp-for="SearchItem.TypeDay"/>日
+
+
+
+    FromDate:
+    <input asp-for="SearchItem.FromDate" type="date" />
+    ToDate:
+    <input asp-for="SearchItem.ToDate" type="date" />
 
     <input type="submit" value="実行" />
 </form>
+
+
+<table border="1">
+    <tr>
+        <th>
+            Year
+        </th>
+        <th>
+            AccountTypeId
+        </th>
+        <th>
+            Revenue
+        </th>
+        <th>
+            Expense
+        </th>
+    </tr>
+    @foreach (var item in Model.DetailItems)
+    {
+        <tr>
+            <td>@item.Year</td>
+            <td>@item.AccountTypeId</td>
+            <td>@item.Revenue</td>
+            <td>@item.Expense</td>
+        </tr>
+    }
+
+    </table>
