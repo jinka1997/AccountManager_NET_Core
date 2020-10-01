@@ -25,11 +25,12 @@ namespace RestApi
         {
         }
 
-        public static readonly LoggerFactory LoggerFactory = new LoggerFactory(new[] {
-            new DebugLoggerProvider((category, level)
-                => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
-            });
+        //public static readonly LoggerFactory LoggerFactory = new LoggerFactory(new[] {
+        //    new DebugLoggerProvider((category, level)
+        //        => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
+        //    });
 
+        public static readonly LoggerFactory LoggerFactory;
         public DbSet<AccountDetail> AccountDetails { set; get; }
         public DbSet<AccountType> AccountTypes { set; get; }
 
