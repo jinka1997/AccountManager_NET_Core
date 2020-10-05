@@ -27,6 +27,7 @@ namespace Api31
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
             services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("hoge")));
         }
 
