@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
+using MediatR.Pipeline;
 
 namespace Api31
 {
@@ -26,6 +28,7 @@ namespace Api31
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddMediatR(typeof())
             services.AddControllers();
             
             services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("hoge")));
