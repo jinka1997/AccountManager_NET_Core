@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using MediatR;
 
 namespace Api31.Services.UseCase
 {
-    public class SearchDetailQuery : IRequest<IEnumerable<AccountDetail>>
+    public class SearchDetailQuery : IRequest<ImmutableList<AccountDetail>>
     {
         //全部にUserAccountId使うのなら、共通化が必要かね。
         public long UserAccountId { get; private set; }

@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Api31.Repositories;
 using MediatR;
 using Api31.Models.Enumeration;
+using System.Collections.Immutable;
 
 namespace Api31.Services.UseCase
 {
-    public class SearchDetailQueryHandler : IRequestHandler<SearchDetailQuery, IEnumerable<AccountDetail>>
+    public class SearchDetailQueryHandler : IRequestHandler<SearchDetailQuery, ImmutableList<AccountDetail>>
     {
         private readonly AccountDetailRepository _repository;
         public SearchDetailQueryHandler(AccountDetailRepository repository)
@@ -19,7 +20,7 @@ namespace Api31.Services.UseCase
             _repository = repository;
         }
 
-        public async Task<IEnumerable<AccountDetail>> Handle(SearchDetailQuery request, CancellationToken cancellationToken)
+        public async Task<ImmutableList<AccountDetail>> Handle(SearchDetailQuery request, CancellationToken cancellationToken)
         {
             var query = _repository.GetAll()
                 .Where(d => d.Id == request.UserAccountId)
@@ -29,7 +30,7 @@ namespace Api31.Services.UseCase
                 .Include(d => d.AccountBook)
                 .Include(d => d.AccountType)
                 .Include(d => d.UserAccount);
-            return await query.ToListAsync();
+            return await Task.Run(() => query.ToImmutableList());
         }
     }
 }
