@@ -6,6 +6,7 @@ using Api31.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Api31.Services.UseCase;
+using System.Collections.Immutable;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +24,7 @@ namespace Api31.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IEnumerable<AccountDetail>> GetAsync([FromBody] long userAccountId, 
+        public async Task<ImmutableList<AccountDetail>> GetAsync([FromBody] long userAccountId, 
             [FromQuery] string remarks, [FromQuery] string fromString, [FromQuery] string toString)
         {
             var command = new SearchDetailQuery(userAccountId, remarks, fromString, toString);

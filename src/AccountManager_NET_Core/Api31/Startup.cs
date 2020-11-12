@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using MediatR.Pipeline;
+using Api31.Services.UseCase;
 
 namespace Api31
 {
@@ -28,7 +29,7 @@ namespace Api31
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMediatR(typeof())
+            services.AddMediatR(typeof(SearchDetailQueryHandler).Assembly);
             services.AddControllers();
             
             services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("hoge")));
