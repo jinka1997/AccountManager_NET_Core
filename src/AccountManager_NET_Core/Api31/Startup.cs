@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 using MediatR.Pipeline;
 using Api31.Services.UseCase;
+using Api31.Repositories;
+using Api31.Models;
 
 namespace Api31
 {
@@ -32,8 +34,9 @@ namespace Api31
             services.AddMediatR(typeof(SearchDetailQueryHandler).Assembly);
             services.AddControllers();
             
-            services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("hoge")));
+            services.AddDbContext<AccountManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AmContext")));
             //services.AddMediatR(typeof(Api31))
+            services.AddTransient(typeof(AccountDetailRepository));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
